@@ -1,5 +1,5 @@
-# terraform-terraform-template
-Template repository for terraform modules. Good for any cloud and any provider.
+# terraform-aws-config-rhythmic-required-tags
+Applies an AWS Config rule to look for required/suggested Rhythmic tags.
 
 [![tflint](https://github.com/rhythmictech/terraform-terraform-template/workflows/tflint/badge.svg?branch=master&event=push)](https://github.com/rhythmictech/terraform-terraform-template/actions?query=workflow%3Atflint+event%3Apush+branch%3Amaster)
 [![trivy](https://github.com/rhythmictech/terraform-terraform-template/workflows/trivy/badge.svg?branch=master&event=push)](https://github.com/rhythmictech/terraform-terraform-template/actions?query=workflow%3Atrivy+event%3Apush+branch%3Amaster)
@@ -12,44 +12,46 @@ Template repository for terraform modules. Good for any cloud and any provider.
 Here's what using the module will look like
 ```hcl
 module "example" {
-  source = "rhythmictech/terraform-mycloud-mymodule
+  source = "rhythmictech/config-rhythmic-required-tags/aws
 }
 ```
 
-## About
-A bit about this module
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.70.0 |
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_tags"></a> [tags](#module\_tags) | rhythmictech/tags/terraform | ~> 1.1 |
+No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [aws_config_config_rule.required_tags](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/config_config_rule) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | Moniker to apply to all resources in the module | `string` | n/a | yes |
+| <a name="input_required_tags"></a> [required\_tags](#input\_required\_tags) | A map of required resource tags. Format is tagNKey, tagNValue, where N is int. Values are optional. | `map(string)` | <pre>{<br>  "app": "",<br>  "backup_policy": "",<br>  "code_managed_at": "",<br>  "code_managed_by": "",<br>  "component": "",<br>  "cost_center": "",<br>  "datadog_managed": "true,false,critical",<br>  "dlm_policy": "",<br>  "env": "",<br>  "profile": "",<br>  "rhythmic_managed": "true,false",<br>  "schedule": "",<br>  "service": "",<br>  "version": ""<br>}</pre> | no |
+| <a name="input_resource_types"></a> [resource\_types](#input\_resource\_types) | Resource types to check for tags | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | User-Defined tags | `map(string)` | `{}` | no |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_tags_module"></a> [tags\_module](#output\_tags\_module) | Tags Module in it's entirety |
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Getting Started

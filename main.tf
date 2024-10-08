@@ -1,16 +1,26 @@
+resource "aws_config_config_rule" "required_tags" {
+  for_each = var.required_tags
 
-module "tags" {
-  source  = "rhythmictech/tags/terraform"
-  version = "~> 1.1"
+  name        = "required-tag-${each.key}"
+  description = "Checks if resources are deployed with the required tag: ${each.key}"
 
-  enforce_case = "UPPER"
-  names        = [var.name]
-  tags         = var.tags
-}
+  source {
+    owner             = "AWS"
+    source_identifier = "REQUIRED_TAGS"
+  }
 
-locals {
-  # tflint-ignore: terraform_unused_declarations
-  name = module.tags.name
-  # tflint-ignore: terraform_unused_declarations
-  tags = module.tags.tags_no_name
+  scope {
+    compliance_resource_types = var.resource_types
+  }
+
+  input_parameters = jsonencode(
+    each.value != "" ? {
+      tag1Key   = each.key
+      tag1Value = each.value
+      } : {
+      tag1Key = each.key
+    }
+  )
+
+  tags = var.tags
 }
